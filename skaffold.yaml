@@ -1,0 +1,13 @@
+apiVersion: skaffold/v4beta12
+kind: Config
+metadata:
+  name: model
+build:
+  artifacts:
+    - image: shothik-depl-qa
+      context: .
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/*

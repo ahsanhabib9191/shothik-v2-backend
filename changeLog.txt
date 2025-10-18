@@ -1,0 +1,10 @@
+13-01-2025 1:02 PM
+============================
+parseRevisedTexts Function Update
+- Modified the function to handle cases where the output is '[ '**', '**', '**' ]' by applying an alternative algorithm to format the revised text correctly.
+
+16-01-2025 4:29 PM
+============================
+Refactor Text Processing Logic
+- Refactored the text processing logic to use Promise.all for concurrent processing of text chunks.
+- Broke down the logic into individual functions for better modularity and readability.

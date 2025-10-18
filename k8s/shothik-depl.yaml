@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shothik-depl-qa
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: shothik-depl-qa
+  template:
+    metadata:
+      labels:
+        app: shothik-depl-qa
+    spec:
+      containers:
+      - name: shothik-container
+        image: shothik-depl-qa:latest # Use a placeholder
+        
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PREFIX
+          value: "/api"
+        - name: MONGO_URI 
+          value: "mongodb+srv://admin:admin@cluster0.xklu8.mongodb.net/shothik-qa"
+        - name: CLOUD_BUCKET
+          value: "shothik"
+        - name: STRIPE_SECRET_KEY
+          value: "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"
+        - name: STRIPE_WEBHOOK_SECRET
+          value: "whsec_5nMJsRyDr8RKYynDycEMHHqzjUwKbEgb"
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_USER
+          value: "secsbdxj"
+        - name: RABBITMQ_PASS
+          value: "UnI6seG3EgPpqSjJTsssd8VzH1H__arv"
+        - name: RABBITMQ_URL
+          value: "amqps://secsbdxj:UnI6seG3EgPpqSjJTsssd8VzH1H__arv@sparrow.rmq.cloudamqp.com/secsbdxj"
+        - name: REDIS_HOST
+          value: "redis-svc.default.svc.cluster.local"
+        - name: MEETING_DURATION
+          value: "2"
+        - name: GRANT_TOKEN_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant"
+        - name: REFRESH_TOKEN_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/refresh"
+        - name: CREATE_PAYMENT_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/create"
+        - name: EXECUTE_PAYMENT_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/execute"
+        - name: QUERY_PAYMENT_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/status"
+        - name: SEARCH_TRANSACTION_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/general/search/searchTransaction"
+        - name: REFUND_TRANSACTION_URL
+          value: "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/refund"
+        - name: BACKEND_CALLBACK_URL
+          value: "https://az-api.shothik.ai/qa/user/v2/callback"
+        - name: FRONTEND_SUCCESS_URL
+          value: "https://qa.shothik.ai/payment-status/success"
+        - name: FRONTEND_FAIL_URL
+          value: "https://qa.shothik.ai/payment-status/failed"
+        - name: BKASH_USERNAME
+          value: "01874570408"
+        - name: BKASH_PASSWORD
+          value: "58VE9Z)SVLe"
+        - name: BKASH_APP_KEY
+          value: "Sm7aOLCmdFeLjjXTdvq7rx78tc"
+        - name: BKASH_APP_SECRET
+          value: "2rQHlf7YMd5m17XgWGDO07dnism7jvYvbvWN5axLVgbQ9vVV2fIE"
+        - name: KEY_ID
+          value: "rzp_test_iXZrSlJ2LihBag"
+        - name: KEY_SECRET
+          value: "ljhUprU03umjX4rVCdCMb0Lg"
+        - name: RAZOR_WEBHOOK_SECRET
+          value: "qa_secret_for_test"
+        - name: RUNPOD_API_KEY
+          value: "ZGFKE1OOMUKQWX8WJDFFF8TP7VGSJYF29CSTUZ4R"
+        - name: ENDPOINT_ID
+          value: "2m3z9bdhal62af"
+        - name: CLIENT_URI
+          value: "https://shothikailabs.com"
+        - name: GOOGLE_CLIENT_ID
+          value: "57711941601-feattiqkuovnpupqpmuchfu8tnecvo4n.apps.googleusercontent.com"
+        - name: GOOGLE_CLIENT_SECRET
+          value: "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"
+        - name: GOOGLE_REDIRECT_URI
+          value: "https://az-api.shothik.ai/qa/auth/callback"
+
+      imagePullSecrets:
+      - name: ghcr-secret # Make sure this secret is created for image pull
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shothik-qa-svc
+  namespace: default
+spec:
+  selector:
+    app: shothik-depl-qa
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

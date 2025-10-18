@@ -1,0 +1,1390 @@
+// Humanize Sample text
+const humanized_sample_text = [
+  {
+    ai: "Studying ABE Business Management offers a globally recognized, cost-effective qualification that enhances career prospects in business and management. The curriculum focuses on practical skills such as leadership, decision-making, and entrepreneurship, preparing students for real-world challenges. With flexible learning options, ABE accommodates work and personal commitments. Graduates gain access to networking opportunities, professional growth, and pathways to advanced university degrees. Specializations in marketing, HR, and strategy enable focused career development. Accredited worldwide, ABE qualifications are valued by employers and universities, making them an ideal choice for aspiring entrepreneurs and professionals seeking affordable, practical, and internationally recognized business education.",
+    humanized: [
+      {
+        text: "Studying ABE Business Management provides an esteemed, economical qualification that significantly bolsters your career possibilities. The curriculum concentrates on essential applicable competencies such as strong leadership, effective decision-making, and shrewd entrepreneurship, equipping students to confidently overcome real-world obstacles. Furthermore, with flexible learning options, ABE cleverly facilitates the balancing of work and personal obligations. Graduates acquire access to valuable networking prospects, ensuring professional advancement, and opening avenues to advanced university degrees. Consequently, specializations in marketing, HR, and strategy facilitate focused career progression. Accredited worldwide, ABE qualifications are highly prized by discerning employers and prestigious universities, making them an optimal choice for aspiring entrepreneurs and professionals pursuing truly inexpensive, highly practical, and internationally recognized business education.",
+        score: 98,
+        isPlexibity: 0.999,
+      },
+      {
+        text: "ABE Business Management offers a famous, cheap course that aids your job chances. The classes show you helpful skills like being a leader, making decisions, and starting your own business, getting you ready for real life. Also, ABE has simple learning ways, so it works with your job and family. However, you get to see people, improve (flourish) in your job, and attend higher schools. Furthermore, unique skills in selling, people jobs, and planning assist you in getting the perfect job. ABE courses are known everywhere, so consequently they are great for people who need to start a business or find a job. They give excellent business training.",
+        score: 99,
+        isPlexibity: 0.999,
+      },
+    ],
+  },
+  {
+    ai: "Shark Tank is a popular reality TV show where entrepreneurs pitch their business ideas to a panel of wealthy investors, known as 'sharks,' seeking funding and mentorship. The sharks evaluate the proposals, ask critical questions, and decide whether to invest in exchange for equity or royalties. The show offers entrepreneurs a platform to showcase innovative products and secure funding, while viewers gain insights into entrepreneurship, negotiation, and business strategies. Shark Tank has helped launch many successful businesses and inspired countless individuals to pursue their entrepreneurial dreams. Its mix of innovation, drama, and opportunity makes it a favorite among audiences worldwide.",
+    humanized: [
+      {
+        text: "Shark Tank is a renowned TV show where entrepreneurs propose their exciting business concepts to a panel of affluent financiers, eagerly pursuing substantial funding and expert mentorship. The financiers carefully assess the detailed propositions, thoroughly interrogate the presenters, and decisively determine whether to strategically contribute capital in a fair transaction for an ownership stake or licensing fees. Similarly, the show effectively provides entrepreneurs a prominent platform to skillfully exhibit innovative products and obtain crucial capital, while viewers acquire valuable perspectives into the intricacies of entrepreneurship, skillful bargaining, and effective business tactics. However, Shark Tank has undeniably facilitated the launch of numerous thriving businesses and powerfully motivated innumerable individuals to confidently endeavor to pursue their entrepreneurial aspirations. Its compelling blend of innovation, dramatic intensity, and significant potential makes it a truly preferred choice among audiences worldwide.",
+        score: 98,
+        isPlexibity: 0.999,
+      },
+      {
+        text: "Shark Tank is a renowned TV show where entrepreneurs propose their exciting business concepts to a panel of affluent financiers, eagerly pursuing substantial funding and expert mentorship. The financiers carefully assess the detailed propositions, thoroughly interrogate the presenters, and decisively determine whether to strategically contribute capital in a fair transaction for an ownership stake or licensing fees. Similarly, the show effectively provides entrepreneurs a prominent platform to skillfully exhibit innovative products and obtain crucial capital, while viewers acquire valuable perspectives into the intricacies of entrepreneurship, skillful bargaining, and effective business tactics. However, Shark Tank has undeniably facilitated the launch of numerous thriving businesses and powerfully motivated innumerable individuals to confidently endeavor to pursue their entrepreneurial aspirations. Its compelling blend of innovation, dramatic intensity, and significant potential makes it a truly preferred choice among audiences worldwide.",
+        score: 99,
+        isPlexibity: 0.999,
+      },
+    ],
+  },
+];
+
+//paraphrase sample text
+const paraphrase_sample_text = `Heavy rainfall in California led to widespread flooding and mudslides, causing evacuations and road closures across the state. Emergency services worked tirelessly to rescue stranded residents and provide aid to affected communities. The storms, while bringing much-needed water to the drought-stricken region, also caused significant damage to infrastructure.`;
+
+const paraphrase_sample_text_standard = `Significant rainfall in California resulted in widespread flooding and mudslides, necessitating evacuations and road closures statewide. Emergency responders worked diligently to rescue stranded residents and deliver aid to impacted communities. The storms, although providing essential water to the drought-affected area, also inflicted substantial infrastructure damage.`;
+const paraphrase_sample_text_fluency = `Torrential rains in California triggered widespread flooding and mudslides, necessitating evacuations and road closures statewide. Emergency responders diligently rescued stranded residents and provided aid to impacted communities. These storms, although providing crucial water to the drought-affected area, also inflicted substantial infrastructure damage.`;
+const paraphrase_sample_text_standard_reprase = `Heavy rains in California resulted in widespread flooding and mudslides, necessitating statewide evacuations and road closures. Emergency personnel diligently rescued stranded residents and offered aid to impacted communities. These storms, while providing much-needed water to the drought-affected region, also inflicted considerable infrastructure damage.`;
+const paraphrase_sample_text_fluency_reprase = `Torrential rains in California caused widespread flooding and mudslides, requiring statewide evacuations and road closures. Emergency responders rescued stranded residents and provided aid to affected communities. These storms, while delivering crucial water to the drought-stricken area, also caused significant infrastructure damage.`;
+
+//saple text for paraphrase with variation
+const sample_text_for_paraphrase_with_variation = [
+  {
+    sentence:
+      "Significant rainfall in California resulted in widespread flooding and mudslides, necessitating evacuations and road closures statewide.",
+    standard: [
+      "Heavy rains across California caused widespread flooding and mudslides, forcing many people to leave their homes and shutting down roads throughout the state.",
+      "California experienced intense rainfall, leading to extensive flooding and dangerous mudslides.  This resulted in statewide evacuations and the closing of many roads.",
+      "Due to substantial precipitation, California faced serious flooding and mudslides, making it necessary to clear out areas and block off roads across the entire state.",
+    ],
+    fluency: [
+      "Heavy rains in California caused big floods and mudslides all over the state.  Many people had to leave their homes, and lots of roads were shut down.",
+      "California experienced intense storms that led to flooding and landslides across the entire state.  This forced many residents to evacuate, and numerous roads were closed.",
+      "Because of a lot of rain, California had serious flooding and dangerous mudslides.  As a result, people were forced to escape their homes, and many roads were blocked.",
+    ],
+    words: [
+      {
+        Significant: [
+          "substantial",
+          "considerable",
+          "important",
+          "meaningful",
+          "remarkable",
+          "noticeable",
+          "pronounced",
+          "extensive",
+          "major",
+          "heavy",
+        ],
+      },
+      {
+        rainfall: [
+          "precipitation",
+          "downpour",
+          "shower",
+          "deluge",
+          "storm",
+          "rain",
+          "tempeste",
+          "pour",
+          "spate",
+          "aquall",
+        ],
+      },
+      {
+        in: [
+          "inside",
+          "within",
+          "throughout",
+          "among",
+          "amid",
+          "enclosed by",
+          "surrounded by",
+          "encompassed in",
+          "under",
+          "into",
+        ],
+      },
+      {
+        California: [
+          "CA",
+          "Golden State",
+          "West Coast",
+          "Pacific State",
+          "Cali",
+          "San Andreas region",
+          "Los Angeles area",
+          "Bay Area",
+          "Silicon Valley",
+          "Sacramento region",
+        ],
+      },
+      {
+        resulted: [
+          "caused",
+          "led to",
+          "produced",
+          "triggered",
+          "brought about",
+          "generated",
+          "gave rise to",
+          "sparked",
+          "contributed to",
+          "culminated in",
+        ],
+      },
+      {
+        widespread: [
+          "extensive",
+          "far-reaching",
+          "broad",
+          "expansive",
+          "universal",
+          "prevalent",
+          "rampant",
+          "pervasive",
+          "sweeping",
+          "ubiquitous",
+        ],
+      },
+      {
+        flooding: [
+          "deluge",
+          "inundation",
+          "overflow",
+          "submersion",
+          "swamping",
+          "high water",
+          "waterlogging",
+          "flushing",
+          "runoff",
+          "tide",
+        ],
+      },
+      {
+        mudslides: [
+          "landslide",
+          "debris flow",
+          "earthflow",
+          "avalanche",
+          "soil movement",
+          "rockslide",
+          "mudflow",
+          "slip",
+          "erosion",
+          "slumping",
+        ],
+      },
+      {
+        necessitating: [
+          "requiring",
+          "demanding",
+          "compelling",
+          "calling for",
+          "obligating",
+          "mandating",
+          "forcing",
+          "pressing",
+          "essentializing",
+          "dictating",
+        ],
+      },
+      {
+        evacuations: [
+          "withdrawals",
+          "exoduses",
+          "removals",
+          "displacements",
+          "relocations",
+          "departures",
+          "migrations",
+          "retreats",
+          "extractions",
+          "escapes",
+        ],
+      },
+      {
+        "road closures": [
+          "highway shutdowns",
+          "street blockages",
+          "lane restrictions",
+          "traffic halts",
+          "barricades",
+          "route interruptions",
+          "pathway obstructions",
+          "detours",
+          "access denials",
+          "motorway stoppages",
+        ],
+      },
+      {
+        statewide: [
+          "across the state",
+          "throughout the region",
+          "everywhere in the state",
+          "on a state level",
+          "border-to-border",
+          "all over",
+          "in all counties",
+          "covering all areas",
+          "state-spanning",
+          "region-wide",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "Emergency responders worked diligently to rescue stranded residents and deliver aid to impacted communities.",
+    standard: [
+      "Rescue crews worked hard to save people trapped and give help to affected areas.",
+      "First responders diligently provided assistance and rescued those caught in the disaster's path, ensuring aid reached those in need.",
+      "Teams of emergency personnel acted quickly to help those caught and bring supplies to communities hit by the emergency.",
+    ],
+    fluency: [
+      "Rescue teams worked hard to save people trapped and bring help to areas hit hard by the emergency.",
+      "First responders quickly helped those stuck and gave support to the affected neighborhoods.",
+      "Teams of emergency workers diligently provided assistance and rescued people caught in the disaster zones.",
+    ],
+    words: [
+      {
+        Emergency: [
+          "crisis",
+          "urgent situation",
+          "critical event",
+          "disaster",
+          "catastrophe",
+          "calamity",
+          "urgent need",
+          "distress",
+          "contingency",
+          "breakdown",
+        ],
+      },
+      {
+        responders: [
+          "rescuers",
+          "emergency personnel",
+          "aid workers",
+          "first responders",
+          "paramedics",
+          "firefighters",
+          "medical teams",
+          "relief workers",
+          "police",
+          "crisis teams",
+        ],
+      },
+      {
+        worked: [
+          "labored",
+          "operated",
+          "acted",
+          "functioned",
+          "exerted",
+          "strived",
+          "performed",
+          "engaged",
+          "executed",
+          "toiled",
+        ],
+      },
+      {
+        diligently: [
+          "carefully",
+          "thoroughly",
+          "meticulously",
+          "conscientiously",
+          "attentively",
+          "industriously",
+          "painstakingly",
+          "earnestly",
+          "rigorously",
+          "persistently",
+        ],
+      },
+      {
+        rescue: [
+          "save",
+          "recover",
+          "retrieve",
+          "free",
+          "liberate",
+          "extricate",
+          "help",
+          "aid",
+          "release",
+          "evacuate",
+        ],
+      },
+      {
+        "stranded residents": [
+          "trapped locals",
+          "isolated citizens",
+          "marooned individuals",
+          "stuck inhabitants",
+          "displaced people",
+          "abandoned dwellers",
+          "helpless occupants",
+          "lost tenants",
+          "disconnected homeowners",
+          "forsaken community members",
+        ],
+      },
+      {
+        deliver: [
+          "provide",
+          "distribute",
+          "convey",
+          "transport",
+          "bring",
+          "supply",
+          "dispatch",
+          "furnish",
+          "hand over",
+          "offer",
+        ],
+      },
+      {
+        aid: [
+          "assistance",
+          "help",
+          "support",
+          "relief",
+          "charity",
+          "succor",
+          "rescues",
+          "provisions",
+          "alleviation",
+          "contributions",
+        ],
+      },
+      {
+        "impacted communities": [
+          "affected neighborhoods",
+          "damaged towns",
+          "stricken areas",
+          "distressed districts",
+          "hit populations",
+          "suffering regions",
+          "hurt societies",
+          "traumatized settlements",
+          "devastated communities",
+          "disrupted localities",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "The storms, although providing essential water to the drought-affected area, also inflicted substantial infrastructure damage.",
+    standard: [
+      "The much-needed rain from the storms helped the dry region, but the storms also caused a lot of harm to buildings and roads.",
+      "Severe weather brought necessary water to the parched land, yet this crucial rainfall unfortunately led to significant destruction of the area's infrastructure.",
+      "Despite delivering vital water to the arid zone, the intense storms resulted in considerable damage to the region's infrastructure systems.",
+    ],
+    fluency: [
+      "The much-needed rain from the storms helped the dry land, but the storms also caused a lot of harm to buildings and roads.",
+      "Heavy storms brought desperately needed water to the parched region, yet this vital rainfall came at a cost—significant damage to essential services and structures.",
+      "Despite delivering crucial water to the dry areas, the severe weather caused considerable destruction to buildings and other important systems.",
+    ],
+    words: [
+      {
+        "The storms": [
+          "the tempests",
+          "the downpours",
+          "the rainstorms",
+          "the gales",
+          "the hurricanes",
+          "the cyclones",
+          "the cloudbursts",
+          "the deluges",
+          "the squalls",
+          "the torrents",
+        ],
+      },
+      {
+        although: [
+          "though",
+          "even though",
+          "while",
+          "albeit",
+          "whereas",
+          "despite",
+          "notwithstanding",
+          "granted that",
+          "however",
+          "yet",
+        ],
+      },
+      {
+        providing: [
+          "offering",
+          "supplying",
+          "delivering",
+          "furnishing",
+          "distributing",
+          "giving",
+          "conveying",
+          "handing out",
+          "bestowing",
+          "allocating",
+        ],
+      },
+      {
+        "essential water": [
+          "necessary hydration",
+          "critical moisture",
+          "vital liquid",
+          "indispensable fluid",
+          "crucial supply",
+          "important resource",
+          "fundamental element",
+          "life-sustaining water",
+          "mandatory component",
+          "key necessity",
+        ],
+      },
+      {
+        "drought-affected area": [
+          "arid zone",
+          "dry region",
+          "water-starved location",
+          "parched land",
+          "desert-like place",
+          "barren field",
+          "rain-deprived district",
+          "withered environment",
+          "scorched terrain",
+          "dehydrated sector",
+        ],
+      },
+      {
+        inflicted: [
+          "caused",
+          "imposed",
+          "wreaked",
+          "brought upon",
+          "generated",
+          "delivered",
+          "administered",
+          "enforced",
+          "executed",
+          "produced",
+        ],
+      },
+      {
+        "substantial infrastructure damage": [
+          "serious structural harm",
+          "considerable property loss",
+          "major system destruction",
+          "extensive facility wreckage",
+          "heavy construction damage",
+          "significant urban impairment",
+          "widespread foundational ruin",
+          "notable architectural collapse",
+          "large-scale network disruption",
+          "massive engineering breakdown",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "Torrential rains in California triggered widespread flooding and mudslides, necessitating evacuations and road closures statewide.",
+    standard: [
+      "Heavy downpours in California caused widespread flooding and mudslides, forcing many people to leave their homes and shutting down many roads across the state.",
+      "California experienced intense rainfall leading to extensive flooding and dangerous mudslides.  This resulted in emergency evacuations and the closing of roads throughout the state.",
+      "Due to severe storms, California suffered significant flooding and landslides.  As a result, many areas had to be cleared and roads were blocked, impacting travel across the entire state.",
+    ],
+    fluency: [
+      "Heavy rain in California caused big floods and mudslides, making many people leave their homes and closing many roads across the state.",
+      "California experienced intense rainfall, resulting in extensive flooding and dangerous mudslides.  This led to emergency evacuations and the shutting down of roads throughout the state.",
+      "Because of downpours in California, there were huge floods and lots of mudslides.  As a result, many areas had to be emptied and roads were blocked.",
+    ],
+    words: [
+      {
+        "Torrential rains": [
+          "torrential",
+          "heavy",
+          "intense",
+          "severe",
+          "violent",
+          "stormy",
+          "deluge",
+          "downpour",
+          "precipitation",
+          "cloudburst",
+        ],
+      },
+      {
+        in: [
+          "in",
+          "inside",
+          "within",
+          "at",
+          "into",
+          "on",
+          "throughout",
+          "during",
+          "by",
+          "among",
+        ],
+      },
+      {
+        California: [
+          "California",
+          "Cali",
+          "Golden State",
+          "Sunshine State",
+          "The West Coast",
+        ],
+      },
+      {
+        triggered: [
+          "triggered",
+          "caused",
+          "initiated",
+          "provoked",
+          "set off",
+          "instigated",
+          "activated",
+          "sparked",
+          "brought about",
+          "resulted in",
+        ],
+      },
+      {
+        widespread: [
+          "widespread",
+          "extensive",
+          "broad",
+          "ubiquitous",
+          "far-reaching",
+          "general",
+          "comprehensive",
+          "wide-ranging",
+          "massive",
+          "pervasive",
+        ],
+      },
+      {
+        flooding: [
+          "flooding",
+          "deluge",
+          "inundation",
+          "overflow",
+          "submersion",
+          "swamping",
+          "waterlogging",
+          "flash floods",
+          "high water",
+          "freshet",
+        ],
+      },
+      {
+        and: [
+          "and",
+          "also",
+          "plus",
+          "as well as",
+          "in addition",
+          "furthermore",
+          "along with",
+          "together with",
+          "besides",
+          "moreover",
+        ],
+      },
+      {
+        mudslides: [
+          "mudslides",
+          "landslides",
+          "slips",
+          "slides",
+          "earth slides",
+          "soil erosion",
+          "rock slides",
+          "debris flows",
+          "land falls",
+          "terrain shifts",
+        ],
+      },
+      {
+        necessitating: [
+          "necessitating",
+          "requiring",
+          "demanding",
+          "compelling",
+          "forcing",
+          "entailing",
+          "calling for",
+          "insisting on",
+          "obligating",
+          "stipulating",
+        ],
+      },
+      {
+        evacuations: [
+          "evacuations",
+          "exoduses",
+          "exiles",
+          "relocations",
+          "displacements",
+          "fleeing",
+          "removals",
+          "departures",
+          "flight",
+          "clearances",
+        ],
+      },
+      {
+        "road closures": [
+          "road closures",
+          "roadblockades",
+          "barriers",
+          "detours",
+          "blockages",
+          "obstructions",
+          "circuit breaks",
+          "access restrictions",
+          "travel restrictions",
+          "road diversions",
+        ],
+      },
+      {
+        statewide: [
+          "statewide",
+          "nationwide",
+          "provincial",
+          "regional",
+          "local",
+          "territorial",
+          "across the state",
+          "state-bound",
+          "in all states",
+          "throughout the state",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "Emergency responders diligently rescued stranded residents and provided aid to impacted communities.",
+    standard: [
+      "Rescue crews worked hard to save people trapped in the disaster and offered help to affected areas.",
+      "Following the emergency, first responders diligently helped those caught and gave assistance to the neighborhoods that were hit hard.",
+      "Teams of emergency personnel successfully rescued people who were stuck and gave support to the communities that were harmed.",
+    ],
+    fluency: [
+      "First responders worked hard to save people trapped and helped areas that were hurt.",
+      "Rescue teams quickly helped people stuck in dangerous places and gave support to affected neighborhoods.",
+      "Emergency crews carefully got people out of harm's way and offered assistance to communities in need.",
+    ],
+    words: [
+      { "Heavy rains": ["heavy", "rains"] },
+      { California: ["California"] },
+      { resulted: ["resulted"] },
+      { widespread: ["widespread"] },
+      { flooding: ["flooding"] },
+      { mudslides: ["mudslides"] },
+      { necessitating: ["necessitating"] },
+      { "statewide evacuations": ["statewide", "evacuations"] },
+      { "road closures": ["road", "closures"] },
+    ],
+  },
+  {
+    sentence:
+      "These storms, although providing crucial water to the drought-affected area, also inflicted substantial infrastructure damage.",
+    standard: [
+      "The rain brought much-needed water to the dry region, but it also caused significant harm to buildings and other important systems.",
+      "While these storms delivered essential moisture to the parched land, they also resulted in extensive destruction of infrastructure.",
+      "Despite offering vital rainfall to the drought-stricken area, the severe weather events led to considerable damage to essential services and structures.",
+    ],
+    fluency: [
+      "The storms gave much-needed water to the dry land, but they also caused a lot of harm to buildings and roads.",
+      "Heavy rains brought relief to the parched region, yet the strong weather also led to significant destruction of important structures.",
+      "While these storms delivered essential rainfall to the dry areas,  they unfortunately also created considerable damage to the area's infrastructure.",
+    ],
+    words: [
+      { "Torrential rains": ["torrential", "rains"] },
+      { in: ["in"] },
+      { California: ["California"] },
+      { caused: ["caused"] },
+      { widespread: ["widespread"] },
+      { flooding: ["flooding"] },
+      { and: ["and"] },
+      { mudslides: ["mudslides"] },
+      { requiring: ["requiring"] },
+      { "statewide evacuations": ["statewide", "evacuations"] },
+      { and: ["and"] },
+      { "road closures": ["road", "closures"] },
+    ],
+  },
+  {
+    sentence:
+      "Heavy rains in California resulted in widespread flooding and mudslides, necessitating statewide evacuations and road closures.",
+    standard: [
+      "Torrential downpours across California caused extensive flooding and landslides, forcing many people from their homes and shutting down numerous roads.",
+      "California experienced severe flooding and mudslides due to intense rainfall.  This led to widespread evacuations and the closing of highways throughout the state.",
+      "Because of heavy rain, California suffered significant flooding and numerous mudslides. As a result, people had to leave their homes, and many roads were blocked.",
+    ],
+    fluency: [
+      "California got hit with a lot of rain, causing big floods and mudslides.  Many people had to leave their homes, and lots of roads were shut down.",
+      "Torrential downpours across California led to serious flooding and dangerous mudslides.  This forced the state to order people out of their homes and close many roads.",
+      "Because of intense rainfall, California experienced extensive flooding and damaging mudslides.  As a result, widespread evacuations were needed, and numerous roads were blocked off.",
+    ],
+    words: [
+      {
+        Heavy: [
+          "intense",
+          "strong",
+          "severe",
+          "torrential",
+          "substantial",
+          "massive",
+          "powerful",
+          "significant",
+          "considerable",
+          "weighty",
+        ],
+      },
+      {
+        rains: [
+          "downpours",
+          "rainfalls",
+          "precipitations",
+          "showers",
+          "drizzles",
+          "storms",
+          "wet seasons",
+          "monsoons",
+          "sprinkles",
+          "deluges",
+        ],
+      },
+      {
+        California: [
+          "CA",
+          "Golden State",
+          "West Coast",
+          "Pacific State",
+          "Cali",
+          "San Andreas region",
+          "Los Angeles area",
+          "Bay Area",
+          "Silicon Valley",
+          "Sacramento region",
+        ],
+      },
+      {
+        resulted: [
+          "caused",
+          "led to",
+          "produced",
+          "triggered",
+          "brought about",
+          "generated",
+          "gave rise to",
+          "sparked",
+          "contributed to",
+          "culminated in",
+        ],
+      },
+      {
+        widespread: [
+          "extensive",
+          "far-reaching",
+          "broad",
+          "expansive",
+          "universal",
+          "prevalent",
+          "rampant",
+          "pervasive",
+          "sweeping",
+          "ubiquitous",
+        ],
+      },
+      {
+        flooding: [
+          "deluge",
+          "inundation",
+          "overflow",
+          "submersion",
+          "swamping",
+          "high water",
+          "waterlogging",
+          "flushing",
+          "runoff",
+          "tide",
+        ],
+      },
+      {
+        mudslides: [
+          "landslide",
+          "debris flow",
+          "earthflow",
+          "avalanche",
+          "soil movement",
+          "rockslide",
+          "mudflow",
+          "slip",
+          "erosion",
+          "slumping",
+        ],
+      },
+      {
+        necessitating: [
+          "requiring",
+          "demanding",
+          "compelling",
+          "calling for",
+          "obligating",
+          "mandating",
+          "forcing",
+          "pressing",
+          "essentializing",
+          "dictating",
+        ],
+      },
+      {
+        evacuations: [
+          "withdrawals",
+          "exoduses",
+          "removals",
+          "displacements",
+          "relocations",
+          "departures",
+          "migrations",
+          "retreats",
+          "extractions",
+          "escapes",
+        ],
+      },
+      {
+        "road closures": [
+          "highway shutdowns",
+          "street blockages",
+          "lane restrictions",
+          "traffic halts",
+          "barricades",
+          "route interruptions",
+          "pathway obstructions",
+          "detours",
+          "access denials",
+          "motorway stoppages",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "Emergency personnel diligently rescued stranded residents and offered aid to impacted communities.",
+    fluency: [
+      "First responders worked hard to save people trapped and gave help to areas that were hurt.",
+      "Rescue teams helped those stuck and provided support to the affected neighborhoods after the emergency.",
+      "Emergency workers saved people caught in the disaster and assisted communities in need.",
+    ],
+    standard: [
+      "First responders worked hard to save people trapped in the disaster and gave help to affected areas.",
+      "Rescue teams swiftly helped those caught in the emergency and provided assistance to the communities that were hurt.",
+      "Emergency workers carefully freed residents from dangerous situations and gave support to the neighborhoods that had been harmed.",
+    ],
+    words: [
+      {
+        Emergency: [
+          "crisis",
+          "urgent situation",
+          "critical event",
+          "disaster",
+          "catastrophe",
+          "calamity",
+          "urgent need",
+          "distress",
+          "contingency",
+          "breakdown",
+        ],
+      },
+      {
+        personnel: [
+          "staff",
+          "workers",
+          "employees",
+          "team",
+          "crew",
+          "operators",
+          "responders",
+          "specialists",
+          "agents",
+          "units",
+        ],
+      },
+      {
+        diligently: [
+          "carefully",
+          "thoroughly",
+          "meticulously",
+          "conscientiously",
+          "attentively",
+          "industriously",
+          "painstakingly",
+          "earnestly",
+          "rigorously",
+          "persistently",
+        ],
+      },
+      {
+        rescued: [
+          "saved",
+          "recovered",
+          "retrieved",
+          "freed",
+          "liberated",
+          "extricated",
+          "helped",
+          "aided",
+          "released",
+          "evacuated",
+        ],
+      },
+      {
+        "stranded residents": [
+          "trapped locals",
+          "isolated citizens",
+          "marooned individuals",
+          "stuck inhabitants",
+          "displaced people",
+          "abandoned dwellers",
+          "helpless occupants",
+          "lost tenants",
+          "disconnected homeowners",
+          "forsaken community members",
+        ],
+      },
+      {
+        offered: [
+          "provided",
+          "gave",
+          "extended",
+          "delivered",
+          "supplied",
+          "handed",
+          "presented",
+          "contributed",
+          "bestowed",
+          "distributed",
+        ],
+      },
+      {
+        aid: [
+          "assistance",
+          "help",
+          "support",
+          "relief",
+          "charity",
+          "succor",
+          "rescues",
+          "provisions",
+          "alleviation",
+          "contributions",
+        ],
+      },
+      {
+        "impacted communities": [
+          "affected neighborhoods",
+          "damaged towns",
+          "stricken areas",
+          "distressed districts",
+          "hit populations",
+          "suffering regions",
+          "hurt societies",
+          "traumatized settlements",
+          "devastated communities",
+          "disrupted localities",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "These storms, while providing much-needed water to the drought-affected region, also inflicted considerable infrastructure damage.",
+    standard: [
+      "The much-needed rain from these storms helped the dry area, but they also caused a lot of harm to buildings and roads.",
+      "Heavy storms brought welcome rainfall to the parched land,  yet this relief came at a cost, as significant damage was done to the region's infrastructure.",
+      "Although the storms delivered essential water to the drought-stricken area,  they unfortunately caused substantial destruction to its infrastructure systems.",
+    ],
+    fluency: [
+      "The rains brought relief to the dry area, but they also caused a lot of harm to buildings and roads.",
+      "Heavy storms gave thirsty lands some water, unfortunately causing significant destruction to the area's infrastructure.",
+      "Much-needed rain helped the dry region, but the intense weather also severely damaged buildings and other important structures.",
+    ],
+    words: [
+      {
+        "These storms": [
+          "these tempests",
+          "these downpours",
+          "these rainstorms",
+          "these gales",
+          "these hurricanes",
+          "these cyclones",
+          "these cloudbursts",
+          "these deluges",
+          "these squalls",
+          "these torrents",
+        ],
+      },
+      {
+        while: [
+          "although",
+          "even though",
+          "whereas",
+          "despite",
+          "though",
+          "albeit",
+          "notwithstanding",
+          "granted that",
+          "however",
+          "yet",
+        ],
+      },
+      {
+        delivering: [
+          "offering",
+          "supplying",
+          "distributing",
+          "conveying",
+          "handing over",
+          "transporting",
+          "bringing",
+          "furnishing",
+          "bestowing",
+          "allocating",
+        ],
+      },
+      {
+        "crucial water": [
+          "essential hydration",
+          "necessary moisture",
+          "vital liquid",
+          "indispensable fluid",
+          "critical supply",
+          "important resource",
+          "fundamental element",
+          "life-sustaining water",
+          "mandatory component",
+          "key necessity",
+        ],
+      },
+      {
+        "drought-stricken area": [
+          "arid zone",
+          "dry region",
+          "water-starved location",
+          "parched land",
+          "desert-like place",
+          "barren field",
+          "rain-deprived district",
+          "withered environment",
+          "scorched terrain",
+          "dehydrated sector",
+        ],
+      },
+      {
+        caused: [
+          "triggered",
+          "initiated",
+          "resulted in",
+          "led to",
+          "brought about",
+          "generated",
+          "inflicted",
+          "wreaked",
+          "produced",
+          "provoked",
+        ],
+      },
+      {
+        "significant infrastructure damage": [
+          "major structural harm",
+          "considerable property loss",
+          "extensive facility wreckage",
+          "serious construction destruction",
+          "heavy system impairment",
+          "widespread foundational ruin",
+          "notable architectural collapse",
+          "large-scale urban disruption",
+          "massive engineering breakdown",
+          "substantial framework devastation",
+        ],
+      },
+    ],
+  },
+  {
+    sentence:
+      "Torrential rains in California caused widespread flooding and mudslides, requiring statewide evacuations and road closures.",
+    fluency: [
+      "Heavy rains in California caused lots of flooding and mudslides, so many people had to leave their homes and many roads were shut down.",
+      "California experienced intense rainfall leading to widespread flooding and dangerous mudslides.  This resulted in urgent evacuations and the closing of roads across the state.",
+      "Because of the downpour in California, there were floods and mudslides everywhere.  As a result, the state government ordered many people to evacuate, and lots of roads were blocked.",
+    ],
+    standard: [
+      "Heavy downpours in California caused extensive flooding and mudslides, forcing many people to leave their homes and shutting down roads across the state.",
+      "California experienced intense rainfall that led to significant flooding and landslides, resulting in widespread evacuations and the closing of many roads.",
+      "Severe storms brought about flooding and mudslides throughout California, making it necessary to clear out many areas and close numerous roads.",
+    ],
+  },
+  {
+    sentence:
+      "Emergency responders rescued stranded residents and provided aid to affected communities.",
+    standard: [
+      "Rescue crews worked hard to save people trapped in the disaster and gave help to affected areas.",
+      "First responders carefully saved those caught in the emergency and offered assistance to the communities that were hurt.",
+      "Teams of emergency personnel diligently rescued people stuck and supplied aid to the neighborhoods that were affected.",
+    ],
+    fluency: [
+      "First responders worked hard to save people trapped in the disaster and gave help to areas that were hurt.",
+      "Rescue crews diligently helped people stuck and offered support to affected neighborhoods after the emergency.",
+      "Teams of emergency workers saved those caught in the crisis and gave assistance to the communities that suffered.",
+    ],
+  },
+  {
+    sentence:
+      "These storms, while delivering crucial water to the drought-stricken area, also caused significant infrastructure damage.",
+    fluency: [
+      "The rain storms gave much-needed water to the dry land, but they also caused a lot of harm to buildings and roads.",
+      "While these storms brought vital water to the parched region, they unfortunately caused significant destruction to the area's infrastructure.",
+      "Despite being a source of essential water for the dry areas, the severe weather caused considerable damage to buildings and other important systems.",
+    ],
+    standard: [
+      "The storms brought much-needed rain to the dry region, but they also caused a lot of harm to buildings and services.",
+      "While the storms delivered essential water to the parched land, they unfortunately led to significant destruction of the area's infrastructure.",
+      "Despite offering vital rainfall relief to the drought-stricken area, these severe weather events resulted in considerable damage to important structures and systems.",
+    ],
+    words: [
+      { "These storms": ["these", "storms"] },
+      { delivering: ["delivering"] },
+      { "crucial water": ["crucial", "water"] },
+      { "the drought-stricken area": ["the", "drought-stricken", "area"] },
+      { also: ["also"] },
+      { caused: ["caused"] },
+      {
+        "significant infrastructure damage": [
+          "significant",
+          "infrastructure",
+          "damage",
+        ],
+      },
+    ],
+  },
+];
+
+//ai detector sample text;
+const ai_ditector_sample_text = [
+  {
+    text: "Mental health is essential for overall well-being, encompassing emotional, psychological, and social aspects. It affects how we think, feel, and interact with others. Prioritizing mental health helps manage stress, build resilience, and maintain balance. Seeking support, practicing self-care, and fostering connections are vital steps toward a healthier, more fulfilling life.",
+    result: {
+      sentences: [
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9962,
+          perplexity: 402.4922,
+          sentence:
+            "Mental health is essential for overall well-being, encompassing emotional, psychological, and social aspects.",
+          _id: "679f0efed91b96d9ef48f10a",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9917,
+          perplexity: 346.5338,
+          sentence: "It affects how we think, feel, and interact with others.",
+          _id: "679f0efed91b96d9ef48f10b",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9975,
+          perplexity: 433.5776,
+          sentence:
+            "Prioritizing mental health helps manage stress, build resilience, and maintain balance.",
+          _id: "679f0efed91b96d9ef48f10c",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9996,
+          perplexity: 556.4543,
+          sentence:
+            "Seeking support, practicing self-care, and fostering connections are vital steps toward a healthier, more fulfilling life.",
+          _id: "679f0efed91b96d9ef48f10d",
+        },
+      ],
+      ai_detected_sentences: 4,
+      ai_percentage: 100,
+      assessment: "Likely AI-generated",
+      average_ai_confidence: 0.0037,
+      average_perplexity: 434.76,
+      average_words_per_sentence: 16,
+      total_sentences: 4,
+      total_words: 64,
+      _id: "679f0efed91b96d9ef48f109",
+      __v: 0,
+    },
+  },
+  {
+    text: "A computer is an electronic device designed to process data, perform calculations, and execute programs with precision and speed. It consists of hardware and software, enabling tasks like communication, data storage, and problem-solving. Computers revolutionize industries, enhance productivity, and connect the world, making them indispensable tools in modern life.",
+    result: {
+      sentences: [
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.8691,
+          perplexity: 156.7902,
+          sentence:
+            "A computer is an electronic device designed to process data, perform calculations, and execute programs with precision and speed.",
+          _id: "679f0f18d91b96d9ef48f11b",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9643,
+          perplexity: 243.0054,
+          sentence:
+            "It consists of hardware and software, enabling tasks like communication, data storage, and problem-solving.",
+          _id: "679f0f18d91b96d9ef48f11c",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.997,
+          perplexity: 418.411,
+          sentence:
+            "Computers revolutionize industries, enhance productivity, and connect the world, making them indispensable tools in modern life.",
+          _id: "679f0f18d91b96d9ef48f11d",
+        },
+      ],
+      ai_detected_sentences: 3,
+      ai_percentage: 100,
+      assessment: "Likely AI-generated",
+      average_ai_confidence: 0.0565,
+      average_perplexity: 272.74,
+      average_words_per_sentence: 20,
+      total_sentences: 3,
+      total_words: 60,
+      _id: "679f0f18d91b96d9ef48f11a",
+      __v: 0,
+    },
+  },
+  {
+    text: "Artificial Intelligence (AI) is a branch of computer science that enables machines to simulate human intelligence. It powers systems to learn, reason, and adapt, transforming industries like healthcare, finance, and transportation. From virtual assistants to advanced robotics, AI enhances efficiency, automates tasks, and drives innovation, shaping the future of technology.",
+    result: {
+      sentences: [
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9648,
+          perplexity: 244.0438,
+          sentence:
+            "Artificial Intelligence (AI) is a branch of computer science that enables machines to simulate human intelligence.",
+          _id: "679f0f32d91b96d9ef48f12b",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.9901,
+          perplexity: 333.6578,
+          sentence:
+            "It powers systems to learn, reason, and adapt, transforming industries like healthcare, finance, and transportation.",
+          _id: "679f0f32d91b96d9ef48f12c",
+        },
+        {
+          highlight_sentence_for_ai: true,
+          human_confidence: 0.998,
+          perplexity: 448.0434,
+          sentence:
+            "From virtual assistants to advanced robotics, AI enhances efficiency, automates tasks, and drives innovation, shaping the future of technology.",
+          _id: "679f0f32d91b96d9ef48f12d",
+        },
+      ],
+      ai_detected_sentences: 3,
+      ai_percentage: 100,
+      assessment: "Likely AI-generated",
+      average_ai_confidence: 0.0157,
+      average_perplexity: 341.91,
+      average_words_per_sentence: 21.33,
+      total_sentences: 3,
+      total_words: 64,
+      _id: "679f0f32d91b96d9ef48f12a",
+      __v: 0,
+    },
+  },
+  {
+    text: "Social media connects people across the world, letting them talk, share & create relationships easily. Platforms like Facebook, Twitter & Instagram allow quick conversations, building a sense of community & a place for presenting yourself. Though it advances new concepts and sends out updates, it also has issues like personal data, mental wellness impacts & incorrect details. When used with attention, social media becomes a powerful method to form genuine ties and engage with the world.",
+    result: {
+      sentences: [
+        {
+          highlight_sentence_for_ai: false,
+          human_confidence: 96,
+          perplexity: 27,
+          sentence:
+            "Social media connects people across the world, letting them talk, share & create relationships easily.",
+          _id: "679f0f4bd91b96d9ef48f13b",
+        },
+        {
+          highlight_sentence_for_ai: false,
+          human_confidence: 96,
+          perplexity: 55,
+          sentence:
+            " Platforms like Facebook, Twitter & Instagram allow quick conversations, building a sense of community & a place for presenting yourself.",
+          _id: "679f0f4bd91b96d9ef48f13c",
+        },
+        {
+          highlight_sentence_for_ai: false,
+          human_confidence: 96,
+          perplexity: 34,
+          sentence:
+            " Though it advances new concepts and sends out updates, it also has issues like personal data, mental wellness impacts & incorrect details.",
+          _id: "679f0f4bd91b96d9ef48f13d",
+        },
+        {
+          highlight_sentence_for_ai: false,
+          human_confidence: 96,
+          perplexity: 37,
+          sentence:
+            " When used with attention, social media becomes a powerful method to form genuine ties and engage with the world.",
+          _id: "679f0f4bd91b96d9ef48f13e",
+        },
+      ],
+      ai_detected_sentences: 0,
+      ai_percentage: 4,
+      assessment: "Human Generated",
+      average_ai_confidence: 4,
+      average_perplexity: 96,
+      average_words_per_sentence: 19,
+      total_sentences: 4,
+      total_words: 76,
+      _id: "679f0f4bd91b96d9ef48f13a",
+      __v: 0,
+    },
+  },
+];
+const fixgrammar_sample_text =
+  "Heavy rains in California caused widespread flooding and mudslides, prompting evacuations in several communities.  The storms, part of a series of atmospheric rivers hitting the state, have significantly impacted infrastructure and agriculture.  Recovery efforts are underway, but the full extent of the damage is still being assessed.";
+const fixgrammar_sample_text_result =
+  "Heavy rains in California caused widespread flooding and mudslides, prompting evacuations in several communities. The storms, part of a series of atmospheric rivers hitting the state, have significantly impacted infrastructure and agriculture. Recovery efforts are underway, but the full extent of the damage is still being assessed.";
+const summarize_sample_text =
+  "Heavy rainfall in California led to widespread flooding and mudslides, causing evacuations and road closures across the state.  Emergency services worked tirelessly to rescue stranded residents and provide aid to affected communities. The storms, while bringing much-needed water to the drought-stricken region, also caused significant damage to infrastructure.";
+const summerize_sample_text_keysentence_result = `* Heavy rainfall caused widespread flooding and mudslides in California.\n* Evacuations and road closures resulted.\n* Storms caused significant infrastructure damage.\n`;
+const summarize_sample_text_paraphrap_result = `California experienced severe flooding and mudslides due to heavy rainfall.\n\nNumerous evacuations and road closures resulted.\n\nEmergency services conducted rescues and provided aid.\n\nThe storms, though beneficial to the drought, caused considerable infrastructure damage.\n`;
+
+// check if sample text is matched with any of the ai text , if matched then return the humanized text
+const checkIfSampleText = (ai_text) => {
+  for (let text of humanized_sample_text) {
+    if (text.ai.toLowerCase() == String(ai_text).toLowerCase()) {
+      return text.humanized;
+    }
+  }
+  return null;
+};
+
+module.exports = {
+  humanized_sample_text,
+  checkIfSampleText,
+  paraphrase_sample_text,
+  paraphrase_sample_text_standard,
+  paraphrase_sample_text_fluency,
+  paraphrase_sample_text_standard_reprase,
+  paraphrase_sample_text_fluency_reprase,
+  sample_text_for_paraphrase_with_variation,
+  ai_ditector_sample_text,
+  fixgrammar_sample_text,
+  fixgrammar_sample_text_result,
+  summarize_sample_text,
+  summerize_sample_text_keysentence_result,
+  summarize_sample_text_paraphrap_result,
+};

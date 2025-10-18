@@ -1,0 +1,16 @@
+{
+    "grant_token_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant",
+    "refresh_token_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/refresh",
+    "create_payment_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/create",
+    "execute_payment_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/execute",
+    "query_payment_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/status",
+    "search_transaction_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/general/search/searchTransaction",
+    "refund_transaction_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/refund",
+    "backend_callback_url": "https://az-api.shothik.ai/api/user/v2/callback",
+    "frontend_success_url": "https://www.picky.com.bd/payment-status/success",
+    "frontend_fail_url": "https://www.picky.com.bd/payment-status/failed",
+    "username": "01874570408",
+    "password": "58VE9Z)SVLe",
+    "app_key": "Sm7aOLCmdFeLjjXTdvq7rx78tc",
+    "app_secret": "2rQHlf7YMd5m17XgWGDO07dnism7jvYvbvWN5axLVgbQ9vVV2fIE"
+}

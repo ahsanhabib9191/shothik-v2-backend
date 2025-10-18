@@ -1,0 +1,16 @@
+{
+  "grant_token_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/grant",
+  "refresh_token_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/token/refresh",
+  "create_payment_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/create",
+  "execute_payment_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/execute",
+  "query_payment_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/status",
+  "search_transaction_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/general/search/searchTransaction",
+  "refund_transaction_url": "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout/payment/refund",
+  "backend_callback_url": "https://az-api.shothik.ai/api/payment/bkash/callback",
+  "frontend_success_url": "https://www.shothik.ai/bkash-payment",
+  "frontend_fail_url": "https://www.shothik.ai/bkash-payment",
+  "username": "01303061771",
+  "password": "uma2F]5K[k#",
+  "app_key": "v4TOep0c036yFNBFRGZiQktatc",
+  "app_secret": "Q5DNxwg7dQ52liVKy2xpGVlcRq3JukIG86XlZ3fmgcZIl0pjJDiU"
+}
